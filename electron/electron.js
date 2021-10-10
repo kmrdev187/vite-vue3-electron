@@ -1,6 +1,6 @@
 // electron/electron.js
 const path = require("path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain, Notification } = require("electron");
 
 const isDev = process.env.IS_DEV == "true" ? true : false;
 
@@ -26,6 +26,16 @@ function createWindow() {
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
+
+  //ipc listener
+  ipcMain.on("toMain", (event, arg) => {
+    const notif = new Notification({
+      title: "Message",
+      body: `Your message is: ${arg}`,
+    });
+    notif.show();
+    mainWindow.webContents.send("fromMain", "Message from Electron: Hello");
+  });
 }
 
 // This method will be called when Electron has finished
