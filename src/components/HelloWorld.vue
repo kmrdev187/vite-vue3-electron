@@ -5,15 +5,6 @@ defineProps({
   msg: String,
 });
 
-function messageToMain(message) {
-  window.ipc.send("toMain", message);
-  window.ipc.receive("fromMain", (message) => {
-    mainMessage.value = message;
-  });
-}
-
-const mainMessage = ref("");
-
 const count = ref(0);
 </script>
 
@@ -40,14 +31,10 @@ const count = ref(0);
   </p>
 
   <button type="button" @click="count++">count is: {{ count }}</button>
-  <button type="button" @click="messageToMain('Hello Electron')">
-    Send message to Electorn
-  </button>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
-  <span>{{ mainMessage }}</span>
 </template>
 
 <style scoped>

@@ -1,46 +1,32 @@
-# Vue 3 + Vite + Electron
+# Vite + Vue3 + Electron
 
 The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Ipc usage
+## Features
 
-### In render process
+- `@` alias for `./src` folder (like Vue2 CLI)
+- Vue3 devtools
+- Installed css preprocessors
+  - **Sass** (.scss, .sass)
+  - **Less** (.less)
+  - **Stylus** (.styl, .stylus)
+- Type-checking tool for `.vue` files
 
-```vue
-<script setup>
-import { ref } from "vue";
+## Vue Devtools
 
-const response = ref("");
+If vue devtools not loaded perfectly or throw an error, you need to navigate **%appdata%/<app_name>/extensions/ljjemllljcmogpfapbkkighbhhppjdbg** and rename **\_metadata** folder to **metadata** (without \_ ).
 
-function sendToMain(message) {
-  window.ipc.send("toMain", message);
-  window.ipc.receive("fromMain", (r) => {
-    response.value = r;
-  });
-}
-</script>
+## CSS Pre-processors
 
-<template>
-  <button type="button" @click="sendToMain('Hello')">Send</button>
-  <span>{{ response }}</span>
-</template>
-```
+Check [this](https://vitejs.dev/guide/features.html#css-pre-processors) page to learn more about pre-processors in vue SFC.
 
-### In main process
+## TypeScript
 
-```js
-const { ipcMain } = require("electron");
+Check out these links to
 
-const mainWindow = new BrowserWindow({
-  //...
-});
+- Type-Checking tool: [here](https://github.com/johnsoncodehk/volar/tree/master/packages/vue-tsc)
 
-//...
-
-ipcMain.on("toMain", (event, arg) => {
-  mainWindow.webContents.send("fromMain", `Your message is: ${arg}`);
-});
-```
+- Vite TypeScript compiler options: [here](https://vitejs.dev/guide/features.html#typescript-compiler-options)
 
 ## Recommended IDE Setup
 
